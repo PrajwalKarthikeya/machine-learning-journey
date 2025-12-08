@@ -1,11 +1,19 @@
-def sequential_model(x):
-    # Layer 1
-    a1 = dense(x, W1, b1)
+import numpy as np
+
+def dense(a_in, W, b):
+    """
+    Computes the output of a dense layer.
+    Args:
+      a_in (ndarray): Data from previous layer (or input data)
+      W (ndarray): Weight matrix (columns = units)
+      b (ndarray): Bias vector
+    """
+    units = W.shape[1]             # Number of neurons = number of columns
+    a_out = np.zeros(units)        # Initialize output vector
     
-    # Layer 2
-    a2 = dense(a1, W2, b2)
-    
-    # Layer 3 (Output)
-    a3 = dense(a2, W3, b3)
-    
-    return a3
+    for j in range(units):         # Loop through each neuron
+        w = W[:, j]                # Extract weights for neuron j
+        z = np.dot(w, a_in) + b[j] # Compute z
+        a_out[j] = g(z)            # Apply sigmoid (g)
+        
+    return a_out
